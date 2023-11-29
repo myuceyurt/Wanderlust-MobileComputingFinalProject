@@ -1,0 +1,30 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Project1" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/darkGrey</item>
+        <item name="colorOnPrimary">@color/black</item>
+    </style>
+
+    <!--          For Night Mode!         -->
+    <style name="Theme.Project1" parent="Base.Theme.Project1" />
+    <style name="ScreenBackground"><item name="android:background">@color/black</item></style>
+    <style name="DetailsScreenBackground"><item name="android:background">@color/black</item></style>
+    <style name="TextColor"><item name="android:textColor">@color/grey</item></style>
+    <style name="HeaderColor"><item name="android:textColor">@color/grey</item></style>
+    <style name="HintTextColor"><item name="android:textColorHint">@color/black</item><item name="android:background">@color/white</item></style>
+    <style name="LoginScreenBackground"><item name="android:background">@color/black</item></style>
+    <style name="ImageChange"><item name="android:src">@drawable/login_image_night</item></style>
+    <style name="LoginStyle"><item name="android:textColorHint">@color/white</item><item name="android:backgroundTint">@color/white</item></style>
+    <style name="RegisterStyle"><item name="android:textColorHint">@color/black</item><item name="android:background">@color/white</item></style>
+    <style name="ButtonStyle"><item name="android:textColor">@color/black</item><item name="android:background">@color/buttonNight</item></style>
+
+    <style name="LeftArrow"><item name="android:src">@drawable/arrow_back_darkmode</item></style>
+    <style name="RightArrow"><item name="android:src">@drawable/arrow_forward_darkmode</item></style>
+    <style name="EmergencyNumber"><item name="android:src">@drawable/emergency_icon_darkmode</item></style>
+    <style name="Location"><item name="android:src">@drawable/location_darkmode</item></style>
+    <style name="SearchIcon"><item name="android:src">@drawable/search_vector_asset_darkmode</item></style>
+
+</resources>

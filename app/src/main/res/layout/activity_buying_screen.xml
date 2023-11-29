@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/ScreenBackground"
+    tools:context=".BuyingScreen">
+
+    <ScrollView
+        android:id="@+id/scrollView4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/priceView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scrollView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/topPicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="261dp"
+                    android:src="@drawable/istanbul_last" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    style="@style/HeaderColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:paddingTop="15dp"
+                    android:text="Hotel Choice"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/five_star"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="5 Star Hotel"
+                        style="@style/TextColor"/>
+
+                    <RadioButton
+                        android:id="@+id/four_star"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="4 Star Hotel"
+                        style="@style/TextColor"/>
+
+                    <RadioButton
+                        android:id="@+id/three_star"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="3 Star Hotel"
+                        style="@style/TextColor"/>
+
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:text="Flight Ticket"
+                    style="@style/HeaderColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/business"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Business"
+                        style="@style/TextColor"/>
+
+                    <RadioButton
+                        android:id="@+id/economy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Economy"
+                        style="@style/TextColor"/>
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:text="Additional Services"
+                    style="@style/HeaderColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <CheckBox
+                    android:id="@+id/insurance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Travel Insurance"
+                    style="@style/TextColor"/>
+
+                <CheckBox
+                    android:id="@+id/rental"
+                    style="@style/TextColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Car Rental" />
+
+                <CheckBox
+                    android:id="@+id/tour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="City Tour"
+                    style="@style/TextColor"
+                    />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Check-in Date"
+                    style="@style/HeaderColor"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
+
+                <CalendarView
+                    android:id="@+id/checkinCalendarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Check-out Date"
+                    style="@style/HeaderColor"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
+
+                <CalendarView
+                    android:id="@+id/checkoutCalendarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <EditText
+        android:id="@+id/priceView"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:background="#8B000000"
+        style="@style/RegisterStyle"
+        android:text="0 EUR"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.465"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:background="@color/white"
+        android:text="Proceed"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
