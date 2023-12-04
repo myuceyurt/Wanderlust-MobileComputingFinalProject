@@ -1,45 +1,40 @@
 package com.example.project1;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import android.Manifest;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class RegisterScreen extends AppCompatActivity {
 
     private CardView register;
-    private Bitmap imageBitmap;
-    private EditText username;
+    private EditText email;
     private EditText passwd;
-    private SharedPreferences sp_dp;
-    private Button btnCapture;
-    private static final int CAMERA_PERMISSION_CODE = 100;
-    private static final int REQUEST_IMAGE_CAPTURE = 101;
-    private ImageView profile_photo;
-    private ActivityResultLauncher<Intent> cameraLauncher;
+    private EditText username;
+    private EditText age;
+    FirebaseFirestore db;
 
-    public RegisterScreen() {
-    }
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,52 +42,67 @@ public class RegisterScreen extends AppCompatActivity {
         setContentView(R.layout.activity_register_screen);
 
         register = findViewById(R.id.cardview_register);
-        username = findViewById(R.id.register_username);
+        email = findViewById(R.id.register_email);
         passwd = findViewById(R.id.register_passwd);
-        btnCapture = findViewById(R.id.snapButton);
-        profile_photo = findViewById(R.id.profile_picture);
-
-        btnCapture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                try {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                } catch (ActivityNotFoundException e) {
-                    // display error state to the user
-                }
-            }
-        });
+        username = findViewById(R.id.register_username);
+        age = findViewById(R.id.register_age);
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sp_dp = getApplicationContext().getSharedPreferences("register_store.txt", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp_dp.edit();
-                String usr = username.getText().toString();
-                String paswd = passwd.getText().toString();
-                editor.putString("username_saved", usr);
-                editor.putString("password_saved", paswd);
-                editor.commit();
+                String userEmail = email.getText().toString();
+                String userPasswd = passwd.getText().toString();
+                String userName = username.getText().toString();
+                String userAge = age.getText().toString();
 
-                Toast.makeText(RegisterScreen.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(userEmail) || TextUtils.isEmpty(userPasswd)) {
+                    Toast.makeText(RegisterScreen.this, "Please fill all the gaps!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                mAuth.createUserWithEmailAndPassword(userEmail, userPasswd)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+//                                    Toast.makeText(RegisterScreen.this, "Registration successful.",
+//                                            Toast.LENGTH_SHORT).show();
 
-                Intent i = new Intent(RegisterScreen.this, LoginScreen.class);
-                i.putExtra("image",imageBitmap);
-                startActivity(i);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                                    Map<String,Object> user = new HashMap<>();
+                                    user.put("email", userEmail);
+                                    user.put("passwd", userPasswd);
+                                    user.put("username", userName);
+                                    user.put("age", userAge);
+
+                                    db.collection("user").
+                                            add(user)
+                                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                        @Override
+                                                        public void onSuccess(DocumentReference documentReference) {
+                                                            Toast.makeText(RegisterScreen.this, "YAS", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(RegisterScreen.this, "Failed", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
+
+                                    FirebaseAuth.getInstance().signOut();
+                                    Intent i = new Intent(RegisterScreen.this, LoginScreen.class);
+                                    startActivity(i);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Toast.makeText(RegisterScreen.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
         });
 
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            imageBitmap = (Bitmap) extras.get("data");
-            profile_photo.setImageBitmap(imageBitmap);
-        }
     }
 }

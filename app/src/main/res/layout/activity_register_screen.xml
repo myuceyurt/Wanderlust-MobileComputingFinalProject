@@ -10,11 +10,45 @@
     <EditText
         android:id="@+id/register_username"
         style="@style/RegisterStyle"
+        android:layout_width="311dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="112dp"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColorHint="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_passwd" />
+
+    <EditText
+        android:id="@+id/register_age"
+        style="@style/RegisterStyle"
+        android:layout_width="208dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="Age"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColorHint="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/cardview_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_username"
+        app:layout_constraintVertical_bias="0.032" />
+
+    <EditText
+        android:id="@+id/register_email"
+        style="@style/RegisterStyle"
         android:layout_width="329dp"
         android:layout_height="53dp"
         android:layout_marginTop="108dp"
         android:ems="10"
-        android:hint="Username"
+        android:hint="Email"
         android:inputType="text"
         android:textAlignment="center"
         android:textColorHint="@color/black"
@@ -28,18 +62,16 @@
         style="@style/RegisterStyle"
         android:layout_width="311dp"
         android:layout_height="50dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
         android:textAlignment="center"
         android:textColorHint="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_username"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/register_email" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview_register"
@@ -76,43 +108,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <ImageView
-        android:id="@+id/profile_picture"
-        android:layout_width="201dp"
-        android:layout_height="202dp"
-        android:layout_marginBottom="28dp"
-        app:layout_constraintBottom_toTopOf="@+id/snapButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/null_pp" />
-
-    <TextView
-        android:id="@+id/textView10"
-        style="@style/HeaderColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:text="Your Profile Picture:"
-        android:textSize="35sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/profile_picture"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/snapButton"
-        style="@style/TextColor"
-        android:layout_width="138dp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="72dp"
-        android:backgroundTint="#FF0000"
-
-        android:text="Snap!"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/cardview_register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

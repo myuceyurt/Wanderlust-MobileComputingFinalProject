@@ -1,5 +1,7 @@
 package com.example.project1;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -14,6 +16,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +24,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 public class MainScreen extends AppCompatActivity {
     public void dublin(){
@@ -59,6 +72,7 @@ public class MainScreen extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.logout){
+            FirebaseAuth.getInstance().signOut();
             Intent i = new Intent(MainScreen.this, LoginScreen.class);
             startActivity(i);
         }
@@ -155,11 +169,38 @@ public class MainScreen extends AppCompatActivity {
     private boolean nightMode;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-        String username = "NULL";
+        usernameField = findViewById(R.id.username);
+        FirebaseFirestore.getInstance()
+                .collection("user")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.d(TAG,"onSuccess, getting data!");
+                        List<DocumentSnapshot> snapshotList = queryDocumentSnapshots.getDocuments();
+                        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                        for(DocumentSnapshot snapshot: snapshotList){
+                            String currEmail = snapshot.get("email").toString();
+                            if(email.equals(currEmail)){
+                                username = snapshot.get("username").toString();
+                                usernameField.setText(username);
+
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG,"onFailure", e);
+                    }
+                });
 
         Toolbar toolbar = findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbar);
@@ -167,14 +208,13 @@ public class MainScreen extends AppCompatActivity {
 
         try{
             Bundle extras = getIntent().getExtras();
-            username = extras.getString("username");
         }
         catch (RuntimeException e){
             e.printStackTrace();
         }
 
-        usernameField = findViewById(R.id.username);
-        usernameField.setText(username);
+
+
 
         searchBar = findViewById(R.id.searchBar);
         searchButton = findViewById(R.id.searchButton);
